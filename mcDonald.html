@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Macdonald's</title>
+    <style>
+        body{
+            background-color: yellow;
+            margin: 0px;
+            font-family: sans-serif;
+
+        }
+
+        #container{
+            
+            display: flex;
+            justify-content: space-between;
+        }
+        #container1{
+            /* background-color: yellow; */
+            height: 400px;
+            width: 40%;
+            /* border: 1px solid green; */
+            padding-top: 100px;
+        
+        }
+        label{
+            display: block;
+            width: 40%;
+            margin: auto;
+            margin-top: 20px;
+         
+          
+        }
+        #btn{
+            display: block;
+            width: 40%;
+            margin: auto;
+            margin-top: 60px;
+            padding: 5px 5px 5px 5px;
+            border: 0px;
+            background-color: black;
+            color: white;
+            font-size: 18px;
+            border-radius: 5px;
+         
+
+        }
+        #container2{
+        
+            height: 200px;
+            width: 50%;
+            /* border: 1px solid red; */
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            grid-template-rows: repeat (2,1fr);
+            gap: 10px;
+        }
+
+        .images{
+            width: 90%;
+            height: 90%;
+         
+        }
+
+        p{
+            font-size: 20px;
+            font-weight: 600;
+        }
+        #navbar{
+            margin-top: 0px;
+            width: 100%;
+            height: 100px;
+            background-color: #fe0002;
+            display: flex;
+            justify-content: space-between;
+            
+            /* border: 1px solid blue; */
+           
+           
+        }
+        #logo{
+            height: 100px;
+            
+        }
+        #navbar>div:first-child{
+            width: 30%;
+        }
+        #navbar>div:last-child{
+            display: flex;
+            width: 40%;
+            margin: auto;
+            margin-right: -180px;
+
+            
+        }
+        #navbar>div>p:last-child{
+           margin-left: 20px;
+           color: green;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <nav id="navbar">
+        <div>
+            <img id="logo" src="https://www.aislelabs.com/wp-content/uploads/2020/04/symbol-McDonalds.jpg" alt="">
+        </div>
+      
+        <div>
+            <p>Order Id :</p>
+            <p id="orderNum">#Yet to be generated</p>
+        </div>
+        
+    </nav>
+    <div id="container">
+    <div id="container1">
+    <form>
+        <label for="burger">
+            <input type="checkbox" id="burger"> Burger
+        </label>
+        <label for="french">
+            <input type="checkbox" id="french"> French Fries
+        </label>
+        <label for="drink">
+            <input type="checkbox" id="drink"> Cold Drinks
+        </label>
+        <label for="alutikki">
+            <input type="checkbox" id="alu">Ice Cream
+        </label>
+        <input onclick="order(event)" value="Place Order" type="button" id="btn">
+    </form>
+
+    </div>
+
+    <div id="container2">
+       
+
+
+    </div>
+    </div>
+
+
+
+    
+</body>
+<script>
+
+
+    let time=  Math.random()*10000;
+    var count=100;
+    function order(e) {
+
+       
+        
+
+        let burger = document.getElementById("burger").checked;
+        let french = document.getElementById("french").checked;
+        let drink = document.getElementById("drink").checked;
+        let alu = document.getElementById("alu").checked;
+        
+        const order1 = new Promise(function (resolve,reject) {
+            
+            if (burger===true) {
+
+                resolve("https://media.istockphoto.com/photos/juicy-hamburger-on-white-background-picture-id1206323282?k=20&m=1206323282&s=612x612&w=0&h=yatlq6BHRCCvoTzFZLSwaJc0O8Quct_tRPWtH0dj9Fc=")
+            }
+            else{
+                reject("not ordered")
+            }
+        
+        })
+        const order2 = new Promise(function (resolve, reject) {
+            
+            if (french) {
+
+                resolve("https://media.istockphoto.com/photos/potatoes-fries-in-a-red-carton-box-isolated-fast-food-picture-id496094410?k=20&m=496094410&s=612x612&w=0&h=BH41-IaJ-pnGS2BsKRSBL1DtoD-lpc_xtnJQz2jEkOY=")
+            }
+            else{
+                reject("not ordered")
+            }
+        
+
+        })
+        
+        const order3 = new Promise(function (resolve, reject) {
+            
+            if (drink) {
+
+                resolve("https://www.towntokri.com/wp-content/uploads/2021/03/pepsi-can-250ml.jpg")
+            }
+            else{
+                reject("not ordered")
+            }
+        
+
+        })
+        const order4 = new Promise(function (resolve, reject) {
+            
+            if (alu) {
+
+                resolve("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/mcdonalds-popcorn-caramel-ice-cream-cone-1579804983.jpg")
+            }
+            else{
+                reject("not ordered")
+            }
+        
+
+
+        })
+
+        // console.log(order1,order2,order3,order4)
+        
+      
+       
+        setTimeout(function(){
+            let imageCon=document.getElementById("container2")
+        imageCon.innerHTML=null;
+        Promise.allSettled([order1,order2,order3,order4]).then((values) => {
+                var arr=values;
+                // console.log(values)
+               
+
+                for( var i=0;i<arr.length;i++){
+
+                    if(arr[i].status==="fulfilled"){
+                        let image=document.createElement("img")
+                        image.setAttribute("class","images")
+                        image.src=arr[i].value;
+                        imageCon.append(image);
+                        
+                    }
+                }
+
+           
+          
+        })
+    },time);
+
+       
+        let ordernum=document.getElementById('orderNum')
+        ordernum.innerText="#"+count;
+        count++;
+        
+
+       
+    }
+    // setTimeout(function(){
+    //     const cb = document.querySelector('#burger');
+    // console.log(cb.checked); // false
+
+    // },5000)
+
+</script>
+
+
+</html>
